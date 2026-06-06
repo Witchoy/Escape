@@ -9,14 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e185a0fdea21744084155b4ab02c2e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a3e249e7b715704a9674357bfde3fcd, type: 3}
   m_Name: CodeBottle
   m_EditorClassIdentifier: Assembly-CSharp::ItemSo
-  itemName: Potion Bottle
-  itemIcon: {fileID: 21300000, guid: 836e90b9a95a4c64dad315d62b86086f, type: 3}
-  itemDescription: A simple bottle
-  maxStack: 1
+  itemName: Code Bottle
+  itemSprite: {fileID: 21300000, guid: 836e90b9a95a4c64dad315d62b86086f, type: 3}
+  itemMaxStack: 1
   itemPrefab: {fileID: 3305657633589867516, guid: aa82b43c0e7eb05458ffe7ab88d01c1e, type: 3}
-  handPrefab: {fileID: 7002948896856128832, guid: 6aa7c2ce633303a49a4b0ce0f5ba168f, type: 3}
-  handPositionOffset: {x: -0.15, y: -0.25, z: 0}
-  handRotationOffset: {x: 0, y: 0, z: 0}
+  itemHandPrefab: {fileID: 7002948896856128832, guid: 6aa7c2ce633303a49a4b0ce0f5ba168f, type: 3}

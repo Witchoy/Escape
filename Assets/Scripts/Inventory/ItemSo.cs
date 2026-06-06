@@ -1,16 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item", menuName = "NewItem")]
+[CreateAssetMenu(fileName = "Item", menuName = "Inventory/ItemSo")]
 public class ItemSo : ScriptableObject
 {
-    public string itemName;
-    public Sprite itemIcon;
-    public string itemDescription;
-    public int maxStack;
-    public GameObject itemPrefab;
-    public GameObject handPrefab;
-
-    [Header("Hand Offset")]
-    public Vector3 handPositionOffset;
-    public Vector3 handRotationOffset;
+    [SerializeField] private string itemName;
+    [SerializeField] public Sprite itemSprite;
+    [SerializeField] public int itemMaxStack;
+    [SerializeField] public GameObject itemPrefab;
+    [SerializeField] public GameObject itemHandPrefab;
 }
