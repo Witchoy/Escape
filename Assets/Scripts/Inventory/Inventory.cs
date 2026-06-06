@@ -37,6 +37,9 @@ public class Inventory : MonoBehaviour
     {
         _hotbarSlots.AddRange(hotBarObject.GetComponentsInChildren<Slot>());
 
+        PlayerInteraction.OnItemPickedUp += HandlePickUp;
+        PlayerController.OnDropPressed += HandleDropItem;
+        
         _hotbarCallbacks = new Action<InputAction.CallbackContext>[hotbarActions.Length];
         for (var i = 0; i < hotbarActions.Length; i++)
         {
@@ -54,20 +57,12 @@ public class Inventory : MonoBehaviour
 
     private void OnEnable()
     {
-        pickUpItemAction.action.performed += Pickup;
-
-        dropItemAction.action.performed += Drop;
-
         for (var i = 0; i < hotbarActions.Length; i++)
             hotbarActions[i].action.performed += _hotbarCallbacks[i];
     }
 
     private void OnDisable()
     {
-        pickUpItemAction.action.performed -= Pickup;
-
-        dropItemAction.action.performed -= Drop;
-
         for (var i = 0; i < hotbarActions.Length; i++)
             hotbarActions[i].action.performed -= _hotbarCallbacks[i];
     }
@@ -107,29 +102,11 @@ public class Inventory : MonoBehaviour
         if (remaining > 0) Debug.Log("Inventory Full");
     }
 
-    private void Pickup(InputAction.CallbackContext ctx)
+    private void HandlePickUp(Item item)
     {
-        HandlePickUp();
-    }
-
-    private void Drop(InputAction.CallbackContext ctx)
-    {
-        HandleDropItem();
-    }
-
-    private void HandlePickUp()
-    {
-        if (_highlightedItemRenderer != null)
-        {
-            var item = _highlightedItemRenderer.GetComponent<Item>();
-            if (item != null)
-            {
-                AddItem(item.item, item.amount);
-                Destroy(item.gameObject);
-                EquipHandItem();
-            }
-        }
-
+        AddItem(item.item, item.amount);
+        Destroy(item.gameObject);
+        EquipHandItem();
         UpdateHotbarOpacity();
     }
 

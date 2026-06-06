@@ -96,28 +96,6 @@ public class PlayerMovement : MonoBehaviour
         jumpAction.action.performed -= Jump;
     }
 
-    private void OnDrawGizmos()
-    {
-        if (_characterController == null) return;
-
-        Gizmos.color = CanStandUp() ? Color.green : Color.red;
-
-        var castOriginBottom = transform.position + Vector3.up * _characterController.radius;
-        var castOriginTop =
-            transform.position + Vector3.up * (_characterController.height - _characterController.radius);
-
-        Gizmos.DrawWireSphere(castOriginBottom, _characterController.radius);
-        Gizmos.DrawWireSphere(castOriginTop, _characterController.radius);
-        Gizmos.DrawLine(
-            castOriginBottom + Vector3.right * _characterController.radius,
-            castOriginTop + Vector3.right * _characterController.radius
-        );
-        Gizmos.DrawLine(
-            castOriginBottom - Vector3.right * _characterController.radius,
-            castOriginTop - Vector3.right * _characterController.radius
-        );
-    }
-
     private void StoreMovementInput(InputAction.CallbackContext ctx)
     {
         _moveInput = ctx.ReadValue<Vector2>();
