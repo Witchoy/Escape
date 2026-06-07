@@ -19,6 +19,7 @@ public class ItemHighlighter : MonoBehaviour, IHighlightable
 
     public void Unhighlight()
     {
+        if (_renderer == null) return;
         _renderer.material = _originalMaterial;
     }
 }

@@ -3,32 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Inventory : MonoBehaviour
+public class PlayerInventory : MonoBehaviour
 {
     private const float EquippedSlotOpacity = 1f;
-    private const float PickupRange = 3f;
 
     [Header("UI References")] 
     [SerializeField] private GameObject hotBarObject;
 
-    [Header("Visual Feedback")] 
-    [SerializeField] private Material itemHighlightMaterial;
-
     [Header("Player References")] 
     [SerializeField] private Transform playerCameraTransform;
     [SerializeField] private Transform playerHandTransform;
-
-    [Header("Input Actions")] 
-    [SerializeField] private InputActionReference pickUpItemAction;
-    [SerializeField] private InputActionReference dropItemAction;
+    [SerializeField] private PlayerInteraction playerInteraction;
     
     [Header("Hotbar Input Actions")] 
     [SerializeField] private InputActionReference[] hotbarActions;
 
     private readonly List<Slot> _hotbarSlots = new();
     private GameObject _currentlyHeldItem;
-    private Material _highlightedItemOriginalMaterial;
-    private Renderer _highlightedItemRenderer;
     private Action<InputAction.CallbackContext>[] _hotbarCallbacks;
 
     private int _selectedHotbarIndex;
@@ -37,8 +28,8 @@ public class Inventory : MonoBehaviour
     {
         _hotbarSlots.AddRange(hotBarObject.GetComponentsInChildren<Slot>());
 
-        PlayerInteraction.OnItemPickedUp += HandlePickUp;
-        PlayerController.OnDropPressed += HandleDropItem;
+        playerInteraction.OnGrabPressed += HandlePickUp;
+        playerInteraction.OnDropPressed += HandleDropItem;
         
         _hotbarCallbacks = new Action<InputAction.CallbackContext>[hotbarActions.Length];
         for (var i = 0; i < hotbarActions.Length; i++)
@@ -48,11 +39,6 @@ public class Inventory : MonoBehaviour
         }
 
         UpdateHotbarOpacity();
-    }
-
-    private void Update()
-    {
-        DetectLookedAtItem();
     }
 
     private void OnEnable()
@@ -136,32 +122,6 @@ public class Inventory : MonoBehaviour
         equippedSlot.ClearSlot();
         EquipHandItem();
         UpdateHotbarOpacity();
-    }
-
-    private void DetectLookedAtItem()
-    {
-        if (_highlightedItemRenderer != null)
-        {
-            _highlightedItemRenderer.material = _highlightedItemOriginalMaterial;
-            _highlightedItemRenderer = null;
-            _highlightedItemOriginalMaterial = null;
-        }
-
-        var ray = new Ray(playerCameraTransform.position, playerCameraTransform.forward);
-        if (Physics.Raycast(ray, out var hit, PickupRange))
-        {
-            var item = hit.collider.GetComponent<Item>();
-            if (item != null)
-            {
-                var rend = item.GetComponent<Renderer>();
-                if (rend != null)
-                {
-                    _highlightedItemOriginalMaterial = rend.material;
-                    rend.material = itemHighlightMaterial;
-                    _highlightedItemRenderer = rend;
-                }
-            }
-        }
     }
 
     private void UpdateHotbarOpacity()

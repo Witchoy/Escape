@@ -47,9 +47,9 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.11f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Inventory\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Interactable\RotateDoor.cs" />
-    <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInteraction.cs" />
     <Compile Include="Assets\Scripts\Inventory\Item.cs" />
     <Compile Include="Assets\Scripts\Interactable\OpenChest.cs" />
@@ -60,12 +60,11 @@
     <Compile Include="Assets\Scripts\Core\LevelLoaderScript.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Perception\InspectSystem.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Interactable\LockControl.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Inventory\Slot.cs" />
     <Compile Include="Assets\Scripts\Perception\ItemHighlighter.cs" />
     <Compile Include="Assets\Scripts\Interactable\OpeningKey.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IInspectable.cs" />
     <Compile Include="Assets\Scripts\Interactable\EndCubeTouched.cs" />
     <Compile Include="Assets\Scripts\Perception\OutlineOnLook.cs" />
     <Compile Include="Assets\Scripts\Interactable\RotateWheel.cs" />

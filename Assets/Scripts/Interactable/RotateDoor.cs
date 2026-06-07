@@ -15,8 +15,8 @@ public class RotateDoor : MonoBehaviour
         _closedRotation = transform.rotation;
         _openRotation = _closedRotation * Quaternion.Euler(0, 90, 0);
     }
-
-    public void Interact()
+    
+    public void Use()
     {
         if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
         _currentCoroutine = StartCoroutine(ToggleDoor());

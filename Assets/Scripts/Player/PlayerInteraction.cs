@@ -1,82 +1,91 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    private const float PickupRange = 3f;
+    
+    [Header("References")] 
     [SerializeField] private Transform playerCameraTransform;
-    [SerializeField] private Material itemHighlightMaterial;
-    [SerializeField] private float pickupRange = 3f;
+    [SerializeField] private InputActionReference useAction;
+    [SerializeField] private InputActionReference grabAction;
+    [SerializeField] private InputActionReference dropAction;
 
-    public static event Action<Item> OnItemPickedUp;
+    private IHighlightable _highlightedItem;
+    private bool _hasHit;
+    private RaycastHit _currentHit;
 
-    private Renderer _highlightedItemRenderer;
-    private Material _highlightedItemOriginalMaterial;
-    private Item _lookedAtItem;
-    private IInteractable _lookedAtInteractable;
+    public event Action<Item> OnGrabPressed;
+    public event Action OnDropPressed;
 
-    private void Update()
+    private void OnEnable()
     {
-        DetectLookedAtItem();
+        useAction.action.performed += Use;
+        grabAction.action.performed += Grab;
+        dropAction.action.performed += Drop;
     }
 
-    public void TryInteract()
+    private void OnDisable()
     {
-        if (_lookedAtItem != null)
+        useAction.action.performed -= Use;
+        grabAction.action.performed -= Grab;
+        dropAction.action.performed -= Drop;
+    }
+    
+    private void Update()
+    {
+        var ray = new Ray(playerCameraTransform.position, playerCameraTransform.forward);
+        _hasHit = Physics.Raycast(ray, out _currentHit, PickupRange);
+        HandleHighlight();
+    }
+    
+    private void Use(InputAction.CallbackContext context)
+    {
+        if (!_hasHit) return;
+        _currentHit.collider.GetComponent<IUsable>()?.Use();
+    }
+    
+    private void Grab(InputAction.CallbackContext context)
+    {
+        var ray = new Ray(playerCameraTransform.position, playerCameraTransform.forward);
+        if (Physics.Raycast(ray, out var hit, PickupRange))
         {
-            Item itemToPickUp = _lookedAtItem; 
-            ClearHighlight();
-            OnItemPickedUp?.Invoke(itemToPickUp);
-            return;
+            var item = hit.collider.GetComponent<Item>();
+            if (item != null)
+            {
+                ClearHighlight();
+                OnGrabPressed?.Invoke(item);
+            }
         }
+    }
 
-        _lookedAtInteractable?.Interact();
+    private void Drop(InputAction.CallbackContext context)
+    {
+        // TODO: Check if Item can be dropped
+        OnDropPressed?.Invoke();
     }
     
     private void ClearHighlight()
     {
-        if (_highlightedItemRenderer != null)
+        if (_highlightedItem != null)
         {
-            _highlightedItemRenderer.material = _highlightedItemOriginalMaterial;
-            _highlightedItemRenderer = null;
-            _highlightedItemOriginalMaterial = null;
+            _highlightedItem.Unhighlight();
+            _highlightedItem = null;
         }
-
-        _lookedAtItem = null;
-        _lookedAtInteractable = null;
     }
 
-    private void DetectLookedAtItem()
+    private void HandleHighlight()
     {
-        var ray = new Ray(playerCameraTransform.position, playerCameraTransform.forward);
-        
-        if (Physics.Raycast(ray, out var hit, pickupRange))
-        {
-            var item = hit.collider.GetComponent<Item>();
-            var interactable = hit.collider.GetComponent<IInteractable>();
-
-            if (item != null || interactable != null)
-            {
-                var rend = hit.collider.GetComponent<Renderer>();
-
-                if (rend != _highlightedItemRenderer)
-                {
-                    ClearHighlight();
-
-                    _lookedAtItem = item;
-                    _lookedAtInteractable = interactable;
-
-                    if (rend != null)
-                    {
-                        _highlightedItemOriginalMaterial = rend.material;
-                        rend.material = itemHighlightMaterial;
-                        _highlightedItemRenderer = rend;
-                    }
-                }
-                
-                return; 
-            }
-        }
-
         ClearHighlight();
+        if (!_hasHit) return;
+        if (_currentHit.collider == null) return;
+
+        var item = _currentHit.collider.GetComponent<IHighlightable>();
+        if (item != null)
+        {
+            item.Highlight();
+            _highlightedItem = item;
+        }
     }
 }
