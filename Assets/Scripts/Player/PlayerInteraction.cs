@@ -9,7 +9,7 @@ public class PlayerInteraction : MonoBehaviour
     [Header("References")] 
     [SerializeField] private Transform playerCameraTransform;
     [SerializeField] private InputActionReference useAction;
-    [SerializeField] private InputActionReference grabAction;
+    [SerializeField] private InputActionReference interactAction;
     [SerializeField] private InputActionReference dropAction;
 
     private IHighlightable _highlightedItem;
@@ -17,19 +17,20 @@ public class PlayerInteraction : MonoBehaviour
     private RaycastHit _currentHit;
 
     public event Action<Item> OnGrabPressed;
+    public event Action<RaycastHit> OnUsePressed;
     public event Action OnDropPressed;
 
     private void OnEnable()
     {
         useAction.action.performed += Use;
-        grabAction.action.performed += Grab;
+        interactAction.action.performed += Interact;
         dropAction.action.performed += Drop;
     }
 
     private void OnDisable()
     {
         useAction.action.performed -= Use;
-        grabAction.action.performed -= Grab;
+        interactAction.action.performed -= Interact;
         dropAction.action.performed -= Drop;
     }
     
@@ -43,10 +44,10 @@ public class PlayerInteraction : MonoBehaviour
     private void Use(InputAction.CallbackContext context)
     {
         if (!_hasHit) return;
-        _currentHit.collider.GetComponent<IUsable>()?.Use();
+        OnUsePressed?.Invoke(_currentHit);
     }
     
-    private void Grab(InputAction.CallbackContext context)
+    private void Interact(InputAction.CallbackContext context)
     {
         var ray = new Ray(playerCameraTransform.position, playerCameraTransform.forward);
         if (Physics.Raycast(ray, out var hit, PickupRange))
@@ -56,6 +57,14 @@ public class PlayerInteraction : MonoBehaviour
             {
                 ClearHighlight();
                 OnGrabPressed?.Invoke(item);
+                return;
+            }
+            
+            var usable = hit.collider.GetComponent<IUsable>();
+            if (usable != null)
+            {
+                ClearHighlight();
+                usable.Use(_currentHit);
             }
         }
     }

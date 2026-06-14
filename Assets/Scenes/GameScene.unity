@@ -1143,10 +1143,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3305657633589867516, guid: aa82b43c0e7eb05458ffe7ab88d01c1e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 490251492}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa82b43c0e7eb05458ffe7ab88d01c1e, type: 3}
 --- !u!4 &108075254 stripped
 Transform:
@@ -3132,25 +3129,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cf6da963a707f8041ade745dc2f92f0c, type: 3}
   m_PrefabInstance: {fileID: 463143299}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &490251484 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3305657633589867516, guid: aa82b43c0e7eb05458ffe7ab88d01c1e, type: 3}
-  m_PrefabInstance: {fileID: 108075253}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &490251492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 490251484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3634ee62238f9a84faf4a337d62e641d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
-  item: {fileID: 11400000, guid: 42f61c29ad631894986deb960885e997, type: 2}
-  amount: 1
 --- !u!1 &492877125
 GameObject:
   m_ObjectHideFlags: 0
@@ -4681,7 +4659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5808770190018088491, guid: ba20cd2c7a1afdb44a09876694bfbf38, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8348660369932616401, guid: ba20cd2c7a1afdb44a09876694bfbf38, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6306,7 +6284,7 @@ GameObject:
   - component: {fileID: 1110603165}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6397,7 +6375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   playerCameraTransform: {fileID: 1982142799}
   useAction: {fileID: 5949364958958299886, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  grabAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   dropAction: {fileID: 3581413831531049832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &1147312585 stripped
 GameObject:

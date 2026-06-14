@@ -1,4 +1,6 @@
+using UnityEngine;
+
 public interface IUsable
 {
-    void Use();
+    bool Use(RaycastHit? hit);
 }
