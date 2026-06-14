@@ -11,6 +11,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private InputActionReference useAction;
     [SerializeField] private InputActionReference interactAction;
     [SerializeField] private InputActionReference dropAction;
+    [SerializeField] private InputActionReference inspectAction;
 
     private IHighlightable _highlightedItem;
     private bool _hasHit;
@@ -19,12 +20,14 @@ public class PlayerInteraction : MonoBehaviour
     public event Action<Item> OnGrabPressed;
     public event Action<RaycastHit> OnUsePressed;
     public event Action OnDropPressed;
+    public event Action OnInspectPressed;
 
     private void OnEnable()
     {
         useAction.action.performed += Use;
         interactAction.action.performed += Interact;
         dropAction.action.performed += Drop;
+        inspectAction.action.performed += Inspect;
     }
 
     private void OnDisable()
@@ -32,6 +35,7 @@ public class PlayerInteraction : MonoBehaviour
         useAction.action.performed -= Use;
         interactAction.action.performed -= Interact;
         dropAction.action.performed -= Drop;
+        inspectAction.action.performed -= Inspect;
     }
     
     private void Update()
@@ -67,6 +71,11 @@ public class PlayerInteraction : MonoBehaviour
                 usable.Use(_currentHit);
             }
         }
+    }
+
+    private void Inspect(InputAction.CallbackContext context)
+    {
+        OnInspectPressed?.Invoke();
     }
 
     private void Drop(InputAction.CallbackContext context)

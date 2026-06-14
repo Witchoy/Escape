@@ -31,6 +31,7 @@ public class PlayerInventory : MonoBehaviour
         playerInteraction.OnGrabPressed += HandlePickUp;
         playerInteraction.OnDropPressed += HandleDropItem;
         playerInteraction.OnUsePressed += HandleUseItem;
+        playerInteraction.OnInspectPressed += HandleInspectItem;
         
         _hotbarCallbacks = new Action<InputAction.CallbackContext>[hotbarActions.Length];
         for (var i = 0; i < hotbarActions.Length; i++)
@@ -148,6 +149,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (!_currentlyHeldItem) return;
         var usable = _currentlyHeldItem.GetComponent<IUsable>();
+        if (usable == null) return;
         if (!usable.Use(hit)) return;
 
         var slot = _hotbarSlots[_selectedHotbarIndex];
@@ -159,6 +161,15 @@ public class PlayerInventory : MonoBehaviour
 
         EquipHandItem();
         UpdateHotbarOpacity();
+    }
+
+    public event Action<Transform> OnInspectItem;
+
+    private void HandleInspectItem()
+    {
+        Debug.Log("Inspect Item");
+        if (_currentlyHeldItem == null) return;
+        OnInspectItem?.Invoke(_currentlyHeldItem.transform);
     }
 
     private void EquipHandItem()

@@ -20,8 +20,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float crouchTransitionSpeed = 10f;
     [SerializeField] private float cameraOffset = 0.2f;
 
-    [Header("References")] 
+    [Header("References")]
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private InspectSystem inspectSystem;
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference lookAction;
     [SerializeField] private InputActionReference sprintAction;
@@ -33,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isCrouching;
     private bool _isGrounded;
     private bool _isSprinting;
+    private bool _isLocked;
 
     private Vector2 _lookInput;
     private Vector2 _moveInput;
@@ -53,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        inspectSystem.OnInspectStateChanged += locked => _isLocked = locked;
     }
 
     private void Update()
@@ -125,10 +129,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        var move = cameraTransform.TransformDirection(_moveInput.x, 0, _moveInput.y).normalized;
+        var move = _isLocked
+            ? Vector3.zero
+            : cameraTransform.TransformDirection(_moveInput.x, 0, _moveInput.y).normalized;
+
         var currentSpeed = _isCrouching ? crouchingSpeed : _isSprinting ? runningSpeed : walkingSpeed;
         var finalMove = move * currentSpeed;
-        
 
         finalMove.y = _verticalVelocity;
 
@@ -161,6 +167,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleCamera()
     {
+        if (_isLocked) return;
+
         transform.Rotate(0, _lookInput.x * mouseSensitivity, 0);
 
         _verticalAngle -= _lookInput.y * mouseSensitivity;

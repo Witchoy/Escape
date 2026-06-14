@@ -66,7 +66,6 @@
     <Compile Include="Assets\Scripts\Interactable\OpeningKey.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IInspectable.cs" />
     <Compile Include="Assets\Scripts\Interactable\EndCubeTouched.cs" />
-    <Compile Include="Assets\Scripts\Perception\OutlineOnLook.cs" />
     <Compile Include="Assets\Scripts\Interactable\RotateWheel.cs" />
     <Compile Include="Assets\Scripts\Audio\PlaySFX.cs" />
     <None Include="Assets\Sprites\UI\UI-Prompt\Playdate\Fonts\kenney_input_playdate_map.txt" />
