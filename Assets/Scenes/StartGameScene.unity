@@ -4051,7 +4051,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Tab
+  m_Text: 
 --- !u!222 &952494239
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4367,7 +4367,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -4396,6 +4396,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MixerController
   mixer: {fileID: 24100000, guid: 60bfc656eca6c634ebb94f42173f9438, type: 2}
+  masterSlider: {fileID: 1166463976}
+  musicSlider: {fileID: 1245457383}
+  sfxSlider: {fileID: 1118360548}
 --- !u!1 &1128655291
 GameObject:
   m_ObjectHideFlags: 0
@@ -4721,7 +4724,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -4750,6 +4753,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MixerController
   mixer: {fileID: 24100000, guid: 60bfc656eca6c634ebb94f42173f9438, type: 2}
+  masterSlider: {fileID: 1166463976}
+  musicSlider: {fileID: 1245457383}
+  sfxSlider: {fileID: 1118360548}
 --- !u!1 &1177091118
 GameObject:
   m_ObjectHideFlags: 0
@@ -5162,7 +5168,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -5191,6 +5197,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MixerController
   mixer: {fileID: 24100000, guid: 60bfc656eca6c634ebb94f42173f9438, type: 2}
+  masterSlider: {fileID: 1166463976}
+  musicSlider: {fileID: 1245457383}
+  sfxSlider: {fileID: 1118360548}
 --- !u!1 &1284548717
 GameObject:
   m_ObjectHideFlags: 0

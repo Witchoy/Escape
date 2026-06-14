@@ -92,6 +92,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void HandlePickUp(Item item)
     {
+        if (item.TryGetComponent(out PlaySFX sfx)) sfx.Play();
         AddItem(item.item, item.amount);
         Destroy(item.gameObject);
         EquipHandItem();

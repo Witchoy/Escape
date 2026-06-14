@@ -40,6 +40,7 @@ public class RotateWheel : MonoBehaviour, IUsable
     private IEnumerator RotateWheelCoroutine()
     {
         _coroutineAllowed = false;
+        if (TryGetComponent(out PlaySFX sfx)) sfx.Play();
 
         for (int i = 0; i <= 11; i++)
         {
